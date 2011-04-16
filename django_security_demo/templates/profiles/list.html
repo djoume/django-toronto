@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load markup %}
+
+{% block content %}
+
+<h1>Profiles</h1>
+
+{% for profile in userprofile_list %}
+
+    <h2>{{ profile.name }}</h2>
+
+
+    {% if profile.website %}
+    <p><a href="{{ profile.website }}">{{ profile.website }}</a></p>
+    {% endif %}
+
+
+    {{ profile.description|markdown }}
+
+
+    {% if profile.picture %}
+        <p><img src="{{ profile.picture.url }}" alt={{ profile.name }}></p>
+    {% endif %}
+
+    <hr />
+
+{% endfor %}
+
+{% endblock %}
