@@ -37,11 +37,11 @@ LISTENERS['comment_created'].append(EmailManager.on_comment_created)
 class CacheManager(object):
     @classmethod
     def on_comment_created(cls, comment):
-        print "Invalidating cache for comment id = %s." % comment['id']
+        print "Creating cache for comment id = %s." % comment['id']
 
     @classmethod
     def on_comment_updated(cls, comment):
-        print "Invalidating cache for comment id = %s." % comment['id']
+        print "Updating cache for comment id = %s." % comment['id']
 
 
 LISTENERS['comment_created'].append(CacheManager.on_comment_created)
