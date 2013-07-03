@@ -1,7 +1,19 @@
-import collections
+LISTENERS = {}
 
 
-LISTENERS = collections.defaultdict(list)
+def main():
+    comment = {
+        "id": 123,
+        "author": "Guido",
+        "body": "blah blah blah blah",
+    }
+    for method in LISTENERS['comment_created']:
+        method(comment)
+
+    comment['body'] = 'blah blah blah blah blah blah'
+
+    for method in LISTENERS['comment_updated']:
+        method(comment)
 
 
 class UserStatsManager(object):
@@ -10,7 +22,7 @@ class UserStatsManager(object):
         print "Updating user stats for user %s." % comment['author']
 
 
-LISTENERS['comment_created'].append(UserStatsManager.on_comment_created)
+LISTENERS['comment_created'] = [UserStatsManager.on_comment_created]
 
 
 class EmailManager(object):
@@ -33,19 +45,8 @@ class CacheManager(object):
 
 
 LISTENERS['comment_created'].append(CacheManager.on_comment_created)
-LISTENERS['comment_updated'].append(CacheManager.on_comment_updated)
+LISTENERS['comment_updated'] = [CacheManager.on_comment_updated]
 
 
 if __name__ == '__main__':
-    comment = {
-        "id": 123,
-        "author": "Guido",
-        "body": "blah blah blah blah",
-    }
-    for method in LISTENERS['comment_created']:
-        method(comment)
-
-    comment['body'] = 'blah blah blah blah blah blah'
-
-    for method in LISTENERS['comment_updated']:
-        method(comment)
+    main()
